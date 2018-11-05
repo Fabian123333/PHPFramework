@@ -1,0 +1,7 @@
+-
+  title: "Default Website"
+  domain: "stage.fschneider.at"
+  local_name: "default"
+  base_name: ""
+  # cdn: "cdn.example.de"
+  # regex: "\/test\-site\/.*$"
