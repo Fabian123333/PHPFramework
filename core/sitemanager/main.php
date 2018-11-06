@@ -3,10 +3,12 @@
 namespace Core;
 
 use Core\Config;
+use Core\Router;
 
 class Sitemanager
 {
     private $config = [];
+    private $router;
 
     function __construct()
     {
@@ -21,14 +23,43 @@ class Sitemanager
             if(isset($website["domain"]) && $website["domain"] != $domain){
                 next;
             }
-            if(isset($website["path"]) && !preg_match(/* @TODO */)){
-
+            if(isset($website["path"]) && !preg_match("~^/".$website["base_name"]."~", $path)){
+                next;
             }
+            Config::SetWebsiteConfig($website);
+            return $website;
         }
     }
 
-    private function LoadConfig()
-    {
+    public function LoadSite(){
+        $this->router = new Router(Config::GetWebsiteConfig()["local_name"]);
+        $this->router->Run();
+        $this->ParseSiteType($this->router);
+    }
+
+    private function ParseSiteType(Router $router) {
+        switch(strtolower($router->GetSite()["type"])) {
+            case "extended":
+                $this->LoadExtended($router->GetSite());
+                break;
+            case "simple":
+
+                break;
+            case "api":
+
+                break;
+        }
+    }
+
+    private function LoadExtended($site) {
+        require_once($this->GetSourcePath($site["source"]));
+    }
+
+    private function LoadConfig() {
         $this->config = Config::LoadConfig("sitemanager");
+    }
+
+    private function GetSourcePath($file) {
+        return ROOT."/web/".Config::GetWebsiteConfig()['local_name']."/source/".$file;
     }
 }

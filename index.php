@@ -2,7 +2,7 @@
 session_start();
 
 ini_set("display_errors", 1);
-error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+error_reporting(E_ALL & ~E_DEPRECATED);
 
 /* This is the main file of the PHP framework, an totally new hosting solution */
 define("ROOT", __DIR__, true);
@@ -16,6 +16,8 @@ use Core\Sitemanager;
 Autoloader::Init();
 
 $sitemanager = new Sitemanager();
-$site = $sitemanager->GetSite();
 
-echo "debug";
+$site = $sitemanager->GetSite();
+$sitemanager->LoadSite();
+
+echo "<br>debug";

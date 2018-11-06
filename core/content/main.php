@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Core\Config;
+
 abstract class Content {
     static $content = [];
 

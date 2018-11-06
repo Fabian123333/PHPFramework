@@ -1,0 +1,11 @@
+-
+  title: "Default Page"
+  cache: "off"       # on, off, session, supports time e.g. 'on +15m'
+  path: "$"          # regex pattern of url
+  type: "extended"   # extended => custom PHP + Twig [...], simple => Twig, API => API wrapper
+  acl: "%"           # simple acl support, extended in files
+  source: "default.php"
+-
+  title: "Dummy JSON API"
+  path: "api"
+  type: "API"
