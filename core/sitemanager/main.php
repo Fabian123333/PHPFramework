@@ -53,6 +53,7 @@ class Sitemanager
 
     private function LoadExtended($site) {
         require_once($this->GetSourcePath($site["source"]));
+        $site = new \Site\Run();
     }
 
     private function LoadConfig() {

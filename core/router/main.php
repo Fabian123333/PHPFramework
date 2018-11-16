@@ -12,26 +12,22 @@ class Router
     private $config;
     private $site;
 
-    function __construct($local_name)
-    {
+    function __construct($local_name){
         $this->local_name = $local_name;
         $this->LoadConfig();
     }
 
-    private function GetRelativePath()
-    {
+    private function GetRelativePath(){
         $url =  $_SERVER['REQUEST_URI'];
         $replace = Config::GetWebsiteConfig()["base_name"];
         if($replace == "")
             return $url;
         $position = strpos($url, $replace);
-        if ($position !== false) {
+        if ($position !== false)
             return substr_replace($url, "", $position, strlen($url));
-        }
     }
 
-    public function Run()
-    {
+    public function Run(){
         $this->Route();
     }
 
@@ -39,8 +35,7 @@ class Router
         return $this->site;
     }
 
-    private function Route()
-    {
+    private function Route(){
         $url = $this->GetRelativePath();
         foreach($this->config as $site) {
             if (preg_match("~".$site["path"]."(/)?~", $url)) {
@@ -48,10 +43,9 @@ class Router
                 return;
             }
         }
-        throw new \Exception("error - no route found");
+        throw new \Exception("no route found");
     }
-    private function LoadConfig()
-    {
+    private function LoadConfig(){
         $this->config = Config::LoadConfig("router", $this->local_name);
     }
 }
